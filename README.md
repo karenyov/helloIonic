@@ -7,7 +7,14 @@ Este repositório contém um app em Ionic - Hello Ionic
 * [Node.js](https://nodejs.org/en/)
 * [Ionic](https://ionicframework.com/docs/intro/installation/)
 
-# Rodando App...
+# Instalação
+Entrar na pasta do projeto e rodar o npm:
+```
+> npm Install
+
+```
+
+# Rodando App
 No navegador basta iniciar o servidorzinho do Ionic (na pasta do projeto):
 
 ```
