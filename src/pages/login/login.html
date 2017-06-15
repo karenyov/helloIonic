@@ -14,11 +14,13 @@
 
                 <ion-list inset>
                   <ion-item>
-                    <ion-input type="text" placeholder="E-mail:" name="email" formControlName="email" [class.invalido]="foiSubmetido && !loginFrmGroup.controls.email.valid"></ion-input>
+                    <ion-input type="text" placeholder="E-mail:" name="email" formControlName="email" [class.invalido]="foiSubmetido && !loginFrmGroup.controls.email.valid"
+                    [(ngModel)]="loginModel.email"></ion-input>
                   </ion-item>
                   <p *ngIf="foiSubmetido && !loginFrmGroup.controls.email.valid" class="mensagem-invalido">Verifique o e-mail digitado</p>
                   <ion-item>
-                    <ion-input type="password" placeholder="Senha" name="password" formControlName="senha" [class.invalido]="foiSubmetido && !loginFrmGroup.controls.senha.valid"></ion-input>
+                    <ion-input type="password" placeholder="Senha" name="senha" formControlName="senha" [class.invalido]="foiSubmetido && !loginFrmGroup.controls.senha.valid"
+                    [(ngModel)]="loginModel.senha"></ion-input>
                   </ion-item>
                   <p *ngIf="foiSubmetido && !loginFrmGroup.controls.senha.valid" class="mensagem-invalido">Verifique a senha digitada</p>
                 </ion-list>
