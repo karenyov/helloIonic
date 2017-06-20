@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HelloIonicValidadores } from '../../validadores/HelloIonicValidadores';
 import { LoginModel } from '../../models/LoginModel';
 import { HomePage } from '../home/home';
-import { AlertController } from 'ionic-angular';
+import { AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { IAutenticacaoService } from '../../providers.interfaces/IAutenticacaoService';
 
 /**
@@ -26,8 +26,9 @@ export class LoginPage extends PaginaBase {
   loginModel: LoginModel;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public alertCtrl: AlertController,
-    @Inject('IAutenticacaoService') public autenticacaoService: IAutenticacaoService) {
-    super({ formBuilder: formBuilder, alertCtrl: alertCtrl });
+    @Inject('IAutenticacaoService') public autenticacaoService: IAutenticacaoService,
+    public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+    super({ formBuilder: formBuilder, alertCtrl: alertCtrl, LoadingCtrl: loadingCtrl, toastCtrl: toastCtrl });
     this.foiSubmetido = false;
     this.loginModel = new LoginModel();
   }
@@ -44,13 +45,19 @@ export class LoginPage extends PaginaBase {
 
   login(): void {
     this.foiSubmetido = true;
+    this.esconderToast();
     if (this.loginFrmGroup.valid) {
-      if (this.autenticacaoService.login(this.loginModel)) {
-        this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
-      } else {
-        this.mostrarMensagemErro("Login e ou senha incorretos!");
-      }
-      
+      this.mostrarLoading('Fazendo login...');
+      this.autenticacaoService.login(this.loginModel).subscribe(
+        data => {
+          this.esconderLoading();
+          this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
+        },
+        err => {
+          this.esconderLoading();
+          this.mostrarToast(`${JSON.parse(err._body).erro.mensagem}`);
+        }
+      );
     } else {
       alert('Erro');
     }
