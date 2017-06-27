@@ -11,11 +11,23 @@ import { LoginPage } from '../pages/login/login';
 import { AutenticacaoProvider } from '../providers/autenticacao/autenticacao';
 import { IAutenticacaoService } from '../providers.interfaces/IAutenticacaoService';
 
+import { TabsPage } from '../pages/tabs/tabs';
+import { ProdutosPage } from '../pages/produtos/produtos';
+import { PerfilPage } from '../pages/perfil/perfil';
+import { DetalhesProdutoPage } from '../pages/detalhes-produto/detalhes-produto';
+
+import { NativeStorage } from '@ionic-native/native-storage';
+import { ProdutoProvider } from '../providers/produto/produto';
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    TabsPage,
+    ProdutosPage,
+    PerfilPage,
+    DetalhesProdutoPage
   ],
   imports: [
     BrowserModule,
@@ -26,13 +38,19 @@ import { IAutenticacaoService } from '../providers.interfaces/IAutenticacaoServi
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    TabsPage,
+    ProdutosPage,
+    PerfilPage,
+    DetalhesProdutoPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    NativeStorage,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    { provide: 'IAutenticacaoService', useClass: AutenticacaoProvider},
+    { provide: 'IAutenticacaoService', useClass: AutenticacaoProvider },
+    ProdutoProvider,
   ]
 })
 export class AppModule { }

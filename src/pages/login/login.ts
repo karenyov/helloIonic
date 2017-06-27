@@ -7,7 +7,7 @@ import { LoginModel } from '../../models/LoginModel';
 import { HomePage } from '../home/home';
 import { AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { IAutenticacaoService } from '../../providers.interfaces/IAutenticacaoService';
-
+import { TabsPage } from '../tabs/tabs';
 /**
  * Generated class for the LoginPage page.
  *
@@ -51,7 +51,7 @@ export class LoginPage extends PaginaBase {
       this.autenticacaoService.login(this.loginModel).subscribe(
         data => {
           this.esconderLoading();
-          this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
+          this.navCtrl.setRoot(TabsPage, {}, { animate: true, direction: 'forward' });
         },
         err => {
           this.esconderLoading();

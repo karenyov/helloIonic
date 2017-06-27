@@ -4,5 +4,5 @@ import { Observable } from 'rxjs/Observable';
 export interface IAutenticacaoService {
 
     login(loginModel: LoginModel): Observable<void>;
-    logout(): void;
+    logout(): Observable<void>;
 }

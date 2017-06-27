@@ -5,6 +5,9 @@ import { IAutenticacaoService } from '../../providers.interfaces/IAutenticacaoSe
 import { LoginModel } from '../../models/LoginModel';
 import { Observable } from 'rxjs/Observable';
 import { HelloIonicConstantes } from '../../app/HelloIonicConstantes';
+import { NativeStorage } from '@ionic-native/native-storage';
+import 'rxjs/add/observable/fromPromise';
+
 /*
   Generated class for the AutenticacaoProvider provider.
 
@@ -14,7 +17,7 @@ import { HelloIonicConstantes } from '../../app/HelloIonicConstantes';
 @Injectable()
 export class AutenticacaoProvider implements IAutenticacaoService {
 
-  constructor(public http: Http) {
+  constructor(public http: Http, private nativeStorage: NativeStorage) {
     console.log('Hello AutenticacaoProvider Provider');
   }
 
@@ -29,11 +32,18 @@ export class AutenticacaoProvider implements IAutenticacaoService {
     return this.http.post(HelloIonicConstantes.BASE_URL + '/' + HelloIonicConstantes.Auth.LOGIN, corpoRequisicao)
       .map(response => {
         let resp = response.json();
+        this.nativeStorage.setItem('token_autenticacao', { token: resp.data.token })
+          .then(
+          () => console.log('Token armazenado'),
+          (erro) => alert(erro)
+          );
       });
   }
 
-  logout(): void {
-
+  logout(): Observable<void> {
+    return Observable.fromPromise(
+      this.nativeStorage.clear()
+    );
   }
 
 }
